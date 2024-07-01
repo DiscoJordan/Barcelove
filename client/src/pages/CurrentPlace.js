@@ -15,10 +15,7 @@ function CurrentPlace() {
     (place) => place.title !== currentPlaceTitle
   );
 
-  const randomIndexes = useMemo(
-    () => otherPlaces.length && getRandomIndexes(),
-    [placeInfo]
-  );
+  const randomIndexes = otherPlaces.length >= 3 ? getRandomIndexes() : [];
 
   function getRandomIndexes() {
     let indexes = [];
@@ -98,15 +95,19 @@ function CurrentPlace() {
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
-          <h3>You may also like</h3>
-          <hr color="black" />
-          <div className="grid__places">
-            {otherPlaces.map((place, id) => {
-              if (randomIndexes.includes(id)) {
-                return <PlaceCard user={user} place={place} />;
-              }
-            })}
-          </div>
+          {randomIndexes.length ? (
+            <>
+              <h3>You may also like</h3>
+              <hr color="black" />
+              <div className="grid__places">
+                {otherPlaces.map((place, id) => {
+                  if (randomIndexes.includes(id)) {
+                    return <PlaceCard user={user} place={place} />;
+                  }
+                })}
+              </div>
+            </>
+          ) : null}
         </div>
       </div>
     </>
