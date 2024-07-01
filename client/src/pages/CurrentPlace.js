@@ -4,21 +4,21 @@ import { PlacesContext } from "../context/PlacesContext";
 import { UserContext } from "../context/UserContext";
 import ManageButtons from "../components/ManageButtons";
 import PlaceCard from "../components/PlaceCard";
+import Button from "../components/Button";
 
 function CurrentPlace() {
   const { places } = useContext(PlacesContext);
   const { user } = useContext(UserContext);
-
   const currentPlaceTitle = useParams().title;
   const placeInfo = places.find((place) => place.title === currentPlaceTitle);
   const otherPlaces = places.filter(
     (place) => place.title !== currentPlaceTitle
   );
-  
 
-  const randomIndexes = useMemo(()=>otherPlaces.length && getRandomIndexes(),[placeInfo])
-
-  
+  const randomIndexes = useMemo(
+    () => otherPlaces.length && getRandomIndexes(),
+    [placeInfo]
+  );
 
   function getRandomIndexes() {
     let indexes = [];
@@ -44,7 +44,46 @@ function CurrentPlace() {
             <h2>{placeInfo?.subtitle}</h2>
             <ManageButtons place={placeInfo} />
           </div>
-          <h4>Here you will see tags, location,adress, openinghours etc.</h4>
+          <div className="place__main__info">
+            <div className="place__tags">
+              {placeInfo?.tags.map((tag) => (
+                <Button content={tag.tag} />
+              ))}
+            </div>
+            <hr />
+            <div className="place__time">
+              <span class="material-symbols-outlined">schedule</span>
+              <div className="time__day">
+                <h4>Monday</h4>
+                <h4 className="orange">8:00-20:00</h4>
+              </div>
+              <div className="time__day">
+                <h4>Tuesday</h4>
+                <h4 className="orange">8:00-20:00</h4>
+              </div>
+              <div className="time__day">
+                <h4>Wednesday</h4>
+                <h4 className="orange">8:00-20:00</h4>
+              </div>
+              <div className="time__day">
+                <h4>Thursday</h4>
+                <h4 className="orange">8:00-20:00</h4>
+              </div>
+              <div className="time__day">
+                <h4>Friday</h4>
+                <h4 className="orange">8:00-20:00</h4>
+              </div>
+              <div className="time__day">
+                <h4>Saturday</h4>
+                <h4 className="orange">8:00-20:00</h4>
+              </div>
+              <div className="time__day">
+                <h4>Sunday</h4>
+                <h4 className="orange">8:00-20:00</h4>
+              </div>
+            </div>
+            <hr />
+          </div>
           <h3>{placeInfo?.description?.header}</h3>
           <p>{placeInfo?.description?.descriptionText}</p>
         </div>
